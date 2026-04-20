@@ -75,6 +75,7 @@ const RegisterPage = () => {
       loginSuccessMessage(user.displayName);
       navigate("/", { replace: true });
     } catch (err) {
+      console.error("Firebase Auth Error Code:", err.code);
       const errorMessage = getAuthErrorMessage(err.code);
       toast.error(errorMessage);
     } finally {
