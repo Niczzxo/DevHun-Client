@@ -11,7 +11,7 @@ const useSecureAxios = () => {
 
   const axiosSecure = useMemo(() => {
     const instance = axios.create({
-      baseURL: "https://labora-marketplace.vercel.app",
+      baseURL: import.meta.env.VITE_API_URL || "https://devhun-server.vercel.app",
     });
 
     // Request Interceptor: Inject fresh Firebase token

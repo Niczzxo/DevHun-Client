@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://labora-marketplace.vercel.app",
+  baseURL: import.meta.env.VITE_API_URL || "https://devhun-server.vercel.app",
 });
 
 const usePublicAxios = () => {
