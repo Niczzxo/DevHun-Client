@@ -2,7 +2,7 @@ const Badge = ({ children, className = "" }) => {
   return (
     <>
       <span
-        className={`badge badge-primary text-white dark:text-neutral dark:badge-secondary ${className}`}
+        className={`badge-premium ${className}`}
       >
         {children}
       </span>

@@ -14,7 +14,7 @@ const MyInput = ({
         name={name}
         type={type}
         placeholder={placeholder}
-        className={`input ${className}`}
+        className={`input-premium ${className}`}
         disabled={disabled}
         required={required}
         {...props}

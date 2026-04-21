@@ -99,7 +99,7 @@ const RegisterPage = () => {
               <MyTitle>Register Now</MyTitle>
             </div>
 
-            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 dark:bg-info/15 flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
+            <div className="p-4 md:p-8 rounded-md shadow-md card-premium flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
               <div className="flex-1/2">
                 <form onSubmit={handleCreateUser} className="space-y-3.5">
                   <div className="space-y-1.5">

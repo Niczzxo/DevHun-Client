@@ -1,8 +1,7 @@
 // src/pages/Dashboard/EditProfilePage.jsx
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { gsap } from "gsap";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
@@ -28,16 +27,6 @@ const EditProfile = () => {
   const [photoURL, setPhotoURL] = useState(currentUser?.photoURL || "");
   const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
-  const containerRef = useRef(null);
-
-  // GSAP stagger animation on mount
-  useEffect(() => {
-    gsap.fromTo(
-      containerRef.current.querySelectorAll(".stagger-item"),
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, stagger: 0.1, duration: 0.6, ease: "power2.out" }
-    );
-  }, []);
 
   const handleSave = async () => {
     if (!displayName.trim()) {
@@ -63,8 +52,19 @@ const EditProfile = () => {
 
   const pageVariants = {
     initial: { opacity: 0 },
-    animate: { opacity: 1 },
+    animate: { 
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        ease: "easeOut"
+      }
+    },
     exit: { opacity: 0 },
+  };
+
+  const childVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.4 } },
   };
 
   return (
@@ -76,14 +76,14 @@ const EditProfile = () => {
       className="min-h-screen py-8"
     >
       <MyContainer>
-        <div ref={containerRef} className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           {/* Header */}
-          <div className="stagger-item text-center mb-8">
+          <motion.div variants={childVariants} className="text-center mb-8">
             <MyTitle>Edit Profile</MyTitle>
-          </div>
+          </motion.div>
 
           {/* Form Card */}
-          <div className="stagger-item card bg-base-100 dark:bg-gray-800 shadow-xl border border-base-300 dark:border-gray-700">
+          <motion.div variants={childVariants} className="card-premium border-none">
             <div className="card-body">
               {/* Avatar Preview */}
               <div className="flex flex-col items-center mb-8">
@@ -98,7 +98,7 @@ const EditProfile = () => {
               </div>
 
               {/* Display Name */}
-              <div className="form-control stagger-item">
+              <motion.div variants={childVariants} className="form-control">
                 <MyLabel>
                   <HiOutlineUser className="size-5" />
                   Display Name
@@ -109,10 +109,10 @@ const EditProfile = () => {
                   placeholder="Enter your display name"
                   disabled={saving || loading}
                 />
-              </div>
+              </motion.div>
 
               {/* Photo URL */}
-              <div className="form-control stagger-item mt-6">
+              <motion.div variants={childVariants} className="form-control mt-6">
                 <MyLabel>
                   <HiOutlineLink className="size-5" />
                   Profile Picture URL
@@ -130,10 +130,10 @@ const EditProfile = () => {
                     etc.)
                   </span>
                 </label>
-              </div>
+              </motion.div>
 
               {/* Action Buttons */}
-              <div className="card-actions flex justify-end gap-3 mt-10 stagger-item">
+              <motion.div variants={childVariants} className="card-actions flex justify-end gap-3 mt-10">
                 <button
                   onClick={() => navigate("/dashboard/profile")}
                   className="btn btn-sm md:btn-md btn-ghost gap-2"
@@ -150,9 +150,9 @@ const EditProfile = () => {
                   )}
                   Save Changes
                 </MyButton>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </MyContainer>
     </motion.section>

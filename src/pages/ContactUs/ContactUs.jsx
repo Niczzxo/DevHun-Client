@@ -6,8 +6,7 @@ import MyLabel from "../../components/ui/MyLabel/MyLabel";
 import useThemeContext from "../../hooks/useThemeContext";
 import { FiSend, FiCheckCircle } from "react-icons/fi";
 // eslint-disable-next-line no-unused-vars
-import { motion } from "motion/react";
-import gsap from "gsap";
+import { motion, useAnimation } from "motion/react";
 import { faqData } from "../../data/faqData";
 import { contactInfo } from "../../data/contactInfo";
 import MyButton from "../../components/ui/MyButton/MyButton";
@@ -19,6 +18,7 @@ const ContactUs = () => {
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const formControls = useAnimation();
 
   const {
     register,
@@ -31,19 +31,13 @@ const ContactUs = () => {
     setLoading(true);
 
     // Simulate form submission
-    gsap.to(formRef.current, {
-      opacity: 0.5,
-      duration: 0.3,
-    });
+    await formControls.start({ opacity: 0.5, transition: { duration: 0.3 } });
 
-    setTimeout(() => {
+    setTimeout(async () => {
       setSubmitted(true);
       reset();
 
-      gsap.to(formRef.current, {
-        opacity: 1,
-        duration: 0.3,
-      });
+      await formControls.start({ opacity: 1, transition: { duration: 0.3 } });
 
       setLoading(false);
 
@@ -81,11 +75,7 @@ const ContactUs = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className={`py-8 md:py-14 ${
-          theme === "night"
-            ? "bg-linear-to-br from-base-900 via-base-800 to-base-900"
-            : "bg-linear-to-br from-blue-50 via-purple-50 to-blue-50"
-        }`}
+        className="py-8 md:py-14"
       >
         <MyContainer>
           <motion.div
@@ -158,6 +148,7 @@ const ContactUs = () => {
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
+              animate={formControls}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
               ref={formRef}
@@ -361,9 +352,7 @@ const ContactUs = () => {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
-        className={`py-16 md:py-20 ${
-          theme === "night" ? "bg-base-800" : "bg-gray-50"
-        }`}
+        className="py-16 md:py-20"
       >
         <MyContainer>
           <motion.div

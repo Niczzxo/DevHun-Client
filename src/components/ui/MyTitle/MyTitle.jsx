@@ -1,11 +1,18 @@
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+
 const MyTitle = ({ children, className = "" }) => {
   return (
     <>
-      <h3
-        className={`${className} text-2xl md:text-3xl lg:text-4xl font-bold text-center`}
+      <motion.h2
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className={`${className} section-title`}
       >
         {children}
-      </h3>
+      </motion.h2>
     </>
   );
 };

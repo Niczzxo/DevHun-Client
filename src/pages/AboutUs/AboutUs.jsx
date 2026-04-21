@@ -39,47 +39,48 @@ const AboutUs = () => {
       <title>About Us | DevHun</title>
 
       {/* Hero Section */}
-      <section className="relative bg-linear-to-br from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 py-16 md:py-20 overflow-hidden">
+      <section className="relative overflow-hidden pt-20 pb-32">
         <MyContainer>
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center space-y-4"
+            className="text-center space-y-6 max-w-4xl mx-auto"
           >
-            <MyTitle>About DevHun</MyTitle>
-            <p className="text-neutral dark:text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
-              Empowering professionals and businesses to build meaningful
-              connections through skill-based work opportunities
+            <h1 className="text-5xl md:text-7xl font-black leading-tight">
+              We're Building the <span className="primary_linear">Future</span> of Remote Work
+            </h1>
+            <p className="text-xl text-slate-500 dark:text-slate-400 leading-relaxed">
+              DevHun is more than a job portal. We are a global infrastructure for professional empowerment, connecting elite talent with businesses that change the world.
             </p>
           </motion.div>
         </MyContainer>
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 md:py-16 bg-base-100 dark:bg-base-200">
+      <section className="pb-24">
         <MyContainer>
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
+            viewport={{ once: true }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-8"
           >
             {stats.map((stat) => (
               <motion.div
                 key={stat.id}
                 variants={itemVariants}
-                className="text-center p-4 md:p-6 rounded-lg bg-base-200 dark:bg-base-300 hover:shadow-lg transition-shadow"
+                className="card-premium text-center p-10"
               >
-                <p className="text-2xl md:text-4xl font-bold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <p className="text-4xl md:text-5xl font-black primary_linear">
                   <CountUpNumber
                     target={stat.number}
-                    duration={2500}
+                    duration={2000}
                     suffix={stat.suffix || ""}
                   />
                 </p>
-                <p className="text-sm md:text-base text-neutral dark:text-gray-400 mt-2">
+                <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mt-4">
                   {stat.label}
                 </p>
               </motion.div>
@@ -88,18 +89,19 @@ const AboutUs = () => {
         </MyContainer>
       </section>
 
-      {/* Mission, Vision & Values */}
-      <section className="py-12 md:py-16 bg-base-100 dark:bg-base-100">
-        <MyContainer>
-          <div className="mb-12">
-            <MyTitle>Our Values</MyTitle>
+      {/* Values Section */}
+      <section className="section-padding">
+        <MyContainer className="space-y-16">
+          <div className="text-center space-y-4">
+            <MyTitle>Our Core <span className="primary_linear">Principles</span></MyTitle>
+            <p className="section-subtitle">The foundation of everything we build and every connection we facilitate.</p>
           </div>
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
           >
             {values.map((value) => {
               const Icon = value.icon;
@@ -107,19 +109,19 @@ const AboutUs = () => {
                 <motion.div
                   key={value.id}
                   variants={itemVariants}
-                  className="p-6 rounded-xl bg-base-200 dark:bg-base-300 hover:shadow-xl transition-all duration-300 border border-base-300 dark:border-base-400 hover:border-secondary/30"
+                  className="card-premium group"
                 >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="p-3 rounded-lg bg-primary/20 dark:bg-primary/30">
-                      <Icon className="text-2xl text-primary dark:text-secondary" />
+                  <div className="space-y-6">
+                    <div className="size-16 rounded-2xl bg-primary/10 flex items-center justify-center text-3xl text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                      <Icon />
                     </div>
-                    <h3 className="text-xl font-bold text-neutral dark:text-white">
-                      {value.title}
-                    </h3>
+                    <div className="space-y-3">
+                      <h3 className="text-2xl font-bold">{value.title}</h3>
+                      <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
+                        {value.description}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-neutral dark:text-gray-300 leading-relaxed">
-                    {value.description}
-                  </p>
                 </motion.div>
               );
             })}
@@ -128,7 +130,7 @@ const AboutUs = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-12 md:py-16 bg-linear-to-br from-base-200 to-base-300 dark:from-base-200 dark:to-base-300">
+      <section className="py-12 md:py-16">
         <MyContainer>
           <div className="mb-12">
             <MyTitle>Why Choose Us</MyTitle>
@@ -168,7 +170,7 @@ const AboutUs = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-12 md:py-16 bg-base-100 dark:bg-base-100">
+      <section className="py-12 md:py-16">
         <MyContainer>
           <div className="mb-12">
             <MyTitle>Our Team</MyTitle>
@@ -213,7 +215,7 @@ const AboutUs = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-12 md:py-16 bg-linear-to-r from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 border-t border-base-300 dark:border-base-400 overflow-hidden">
+      <section className="relative py-12 md:py-16 overflow-hidden">
         <MyContainer>
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}

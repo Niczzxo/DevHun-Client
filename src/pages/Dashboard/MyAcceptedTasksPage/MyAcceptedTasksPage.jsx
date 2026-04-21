@@ -89,9 +89,9 @@ const MyAcceptedTasksPage = () => {
 
       <motion.section
         className="my-6 py-8"
-        initial={{ opacity: 0, x: "-100vw" }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
       >
         <MyContainer className="space-y-7">
           {tasks.length === 0 ? (
@@ -102,8 +102,8 @@ const MyAcceptedTasksPage = () => {
             <>
               <MyTitle>My Accepted Tasks</MyTitle>
               <div className="overflow-x-auto">
-                <table className="table rounded-lg overflow-hidden  shadow-lg bg-linear-to-r from-primary/5 to-secondary/5 dark:from-primary/15  dark:to-secondary/15">
-                  <thead className="text-neutral dark:text-white/90 bg-info/5 dark:bg-info/15 md:text-lg">
+                <table className="table rounded-lg overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800">
+                  <thead className="bg-slate-50 dark:bg-slate-900 md:text-lg">
                     <tr>
                       <th>#</th>
                       <th>Image</th>

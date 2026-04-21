@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { gsap } from "gsap";
 import { toast } from "react-toastify";
 import useAuthInfo from "../../../hooks/useAuthInfo";
 import useSecureAxios from "../../../hooks/useSecureAxios";
@@ -12,6 +11,7 @@ import ActionSpinner from "../../../components/ui/ActionSpinner/ActionSpinner";
 import { getAlert } from "../../../utilities/getAlert";
 import MyLabel from "../../../components/ui/MyLabel/MyLabel";
 import MyInput from "../../../components/ui/MyInput/MyInput";
+import useGsapStagger from "../../../hooks/useGsapStagger";
 
 const categories = [
   "AI & Machine Learning",
@@ -41,22 +41,7 @@ const AddJobPage = () => {
   const [loading, setLoading] = useState(false);
   const containerRef = useRef(null);
 
-  // GSAP stagger animation on mount
-  useEffect(() => {
-    if (containerRef.current) {
-      gsap.fromTo(
-        containerRef.current.querySelectorAll(".stagger-item"),
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power3.out",
-        }
-      );
-    }
-  }, []);
+  useGsapStagger(containerRef);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -121,27 +106,18 @@ const AddJobPage = () => {
     <>
       <title>Post a Job - DevHun Dashboard</title>
 
-      <section className="py-8 lg:py-12">
-        <MyContainer ref={containerRef}>
+      <section className="py-8 lg:py-12" ref={containerRef}>
+        <MyContainer>
           {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-10 stagger-item"
-          >
+          <div className="text-center mb-10 stagger-item">
             <MyTitle>Post a New Job</MyTitle>
             <p className="mt-4 text-lg text-base-content/70 dark:text-gray-400">
               Reach talented professionals by posting your opportunity
             </p>
-          </motion.div>
+          </div>
 
           {/* Form Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="stagger-item bg-base-100 dark:bg-gray-800 rounded-2xl shadow-2xl border border-base-300 dark:border-gray-700 overflow-hidden"
-          >
+          <div className="stagger-item card-premium border-none overflow-hidden">
             <div className="p-6 sm:p-8 lg:p-12">
               <form onSubmit={handleSubmit} className="space-y-10">
                 {/* Basic Info */}
@@ -418,12 +394,10 @@ const AddJobPage = () => {
                 </div>
 
                 {/* Submit */}
-                <div className="pt-6 border-t border-base-300 dark:border-gray-700">
-                  <MyButton disabled={loading}>
+                <div className="pt-6 border-t border-base-300 dark:border-gray-700 stagger-item">
+                  <MyButton disabled={loading} className="w-full sm:w-auto px-10">
                     {loading ? (
-                      <>
-                        <ActionSpinner />
-                      </>
+                      <ActionSpinner />
                     ) : (
                       "Post Job Opening"
                     )}
@@ -431,7 +405,7 @@ const AddJobPage = () => {
                 </div>
               </form>
             </div>
-          </motion.div>
+          </div>
         </MyContainer>
       </section>
     </>

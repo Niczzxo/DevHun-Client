@@ -14,14 +14,14 @@ const JobCard = ({ singleJob }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0, y: 20 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-      whileHover={{ scale: 1.1, y: -10 }}
-      transition={{ duration: 0.4, delay: 0.1 }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
       onClick={() => navigate(`/job-details/${_id}`)}
-      className="bg-base-300 dark:border-2 border-white/20 rounded-lg shadow-lg dark:shadow-white/30 dark:shadow-md overflow-hidden cursor-pointer"
+      className="card-premium cursor-pointer group p-0!"
     >
-      <figure className="relative">
+      <figure className="relative overflow-hidden p-0!">
         <img
           src={job_image || "https://picsum.photos/seed/jobs/800/600"}
           alt={job_title}
@@ -29,28 +29,32 @@ const JobCard = ({ singleJob }) => {
           onError={(e) => {
             e.target.src = "https://picsum.photos/seed/jobs/800/600";
           }}
-          className="aspect-3/2 object-cover w-full max-h-44 sm:max-h-36 lg:max-h-44"
+          className="aspect-video object-cover w-full group-hover:scale-105 transition-transform duration-700"
         />
-        <Badge className="absolute bottom-3 right-5">{job_category}</Badge>
+        <div className="absolute top-4 right-4">
+          <Badge className="bg-white/90 backdrop-blur-md text-primary font-bold border-none shadow-lg">
+            {job_category}
+          </Badge>
+        </div>
       </figure>
 
-      <div className="space-y-2 p-4">
-        <div className="flex items-center gap-1.5 text-sm text-primary/60 dark:text-primary">
-          <span>
-            <MdOutlineVerifiedUser />
-          </span>
+      <div className="p-6 space-y-4">
+        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary">
+          <MdOutlineVerifiedUser className="text-sm" />
           <span>{cleanPostedBy}</span>
         </div>
 
-        <div
-          data-tip={job_title}
-          className="tooltip tooltip-top tooltip-primary"
-        >
-          <h4 className="line-clamp-1 text-lg text-neutral font-semibold ">
-            {job_title}
-          </h4>
+        <h3 className="line-clamp-1 text-xl group-hover:text-primary transition-colors">
+          {job_title}
+        </h3>
+        
+        <p className="line-clamp-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+          {job_summary}
+        </p>
+
+        <div className="pt-4 border-t border-slate-100 dark:border-slate-700 flex justify-between items-center">
+          <span className="text-primary font-bold text-sm">View Details →</span>
         </div>
-        <p className="line-clamp-2">{job_summary}</p>
       </div>
     </motion.div>
   );

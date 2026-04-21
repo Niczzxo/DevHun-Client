@@ -1,8 +1,6 @@
 // src/pages/Dashboard/ProfilePage.jsx
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { gsap } from "gsap";
-import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import {
   HiOutlineUser,
@@ -19,27 +17,43 @@ import MyTitle from "../../../components/ui/MyTitle/MyTitle";
 const Profile = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuthInfo();
-  const containerRef = useRef(null);
 
-  useEffect(() => {
-    const elements = containerRef.current.querySelectorAll(".stagger-item");
-    gsap.fromTo(
-      elements,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power3.out",
-      }
+  if (!currentUser) {
+    return (
+      <div className="min-h-[60dvh] grid place-items-center">
+        <div className="loading loading-spinner loading-lg text-primary"></div>
+      </div>
     );
-  }, []);
+  }
+
+  const creationDate = currentUser?.metadata?.creationTime 
+    ? new Date(currentUser.metadata.creationTime)
+    : null;
+
+  const creationDateString = creationDate && creationDate.toString() !== "Invalid Date"
+    ? creationDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "Unknown";
 
   const pageVariants = {
-    initial: { opacity: 0, y: 20 },
+    initial: { opacity: 0, y: 10 },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.4,
+        staggerChildren: 0.1,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const childVariants = {
+    initial: { opacity: 0, y: 10 },
     animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -20 },
   };
 
   return (
@@ -47,87 +61,85 @@ const Profile = () => {
       variants={pageVariants}
       initial="initial"
       animate="animate"
-      exit="exit"
-      className="min-h-screen py-8"
+      className="p-4 md:p-8"
     >
       <MyContainer>
-        <div ref={containerRef} className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="stagger-item text-center mb-10">
+          <motion.div variants={childVariants} className="text-center mb-8 md:mb-10">
             <MyTitle>My Profile</MyTitle>
-            <p className="mt-3 text-base-content/70 dark:text-gray-300">
+            <p className="mt-2 text-sm md:text-base text-base-content/70 dark:text-gray-300">
               Manage your account information
             </p>
-          </div>
+          </motion.div>
 
           {/* Profile Card */}
           <motion.div
-            className="stagger-item card bg-base-100 dark:bg-gray-800 shadow-xl border border-base-300 dark:border-gray-700"
-            whileHover={{ scale: 1.01 }}
-            transition={{ duration: 0.3 }}
+            variants={childVariants}
+            className="card-premium border-none shadow-xl"
           >
-            <div className="card-body items-center text-center">
+            <div className="card-body items-center text-center p-4 sm:p-8">
               <Avatar
                 src={currentUser?.photoURL}
                 alt={currentUser?.displayName}
-                size="size-32 md:size-40"
+                size="size-28 sm:size-32 md:size-40"
               />
 
               <div className="mt-6">
-                <h2 className="text-2xl font-bold font-['Raleway']">
+                <h2 className="text-xl sm:text-2xl font-bold">
                   {currentUser?.displayName || "User"}
                 </h2>
-                <p className="text-base-content/60 dark:text-gray-400 mt-1">
+                <p className="text-xs sm:text-sm text-base-content/60 dark:text-gray-400 mt-1">
                   {currentUser?.email}
                 </p>
               </div>
 
-              <div className="mt-8 w-full space-y-4">
+              <div className="mt-8 w-full space-y-5 max-w-md mx-auto">
                 <div className="flex items-center gap-4 text-left">
-                  <HiOutlineUser className="size-6 text-primary dark:text-primary" />
+                  <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <HiOutlineUser className="size-5 text-primary" />
+                  </div>
                   <div>
-                    <p className="text-sm text-base-content/50 dark:text-gray-500">
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-base-content/40">
                       Full Name
                     </p>
-                    <p className="font-medium">
+                    <p className="font-semibold text-sm sm:text-base">
                       {currentUser?.displayName || "Not set"}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4 text-left">
-                  <HiOutlineMail className="size-6 text-primary dark:text-primary" />
+                  <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <HiOutlineMail className="size-5 text-primary" />
+                  </div>
                   <div>
-                    <p className="text-sm text-base-content/50 dark:text-gray-500">
-                      Email
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-base-content/40">
+                      Email Address
                     </p>
-                    <p className="font-medium">{currentUser?.email}</p>
+                    <p className="font-semibold text-sm sm:text-base truncate max-w-[200px] sm:max-w-none">
+                      {currentUser?.email}
+                    </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4 text-left">
-                  <HiOutlineCalendar className="size-6 text-primary dark:text-primary" />
+                  <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <HiOutlineCalendar className="size-5 text-primary" />
+                  </div>
                   <div>
-                    <p className="text-sm text-base-content/50 dark:text-gray-500">
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-base-content/40">
                       Member Since
                     </p>
-                    <p className="font-medium">
-                      {currentUser?.metadata?.creationTime
-                        ? new Date(
-                            currentUser.metadata.creationTime
-                          ).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })
-                        : "Unknown"}
+                    <p className="font-semibold text-sm sm:text-base">
+                      {creationDateString}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="card-actions mt-8">
-                <MyButton onClick={() => navigate("../update-profile")}>
+              <div className="card-actions mt-10">
+                <MyButton onClick={() => navigate("../update-profile")} className="btn-primary">
                   <HiOutlinePencilAlt className="size-5" />
                   Edit Profile
                 </MyButton>

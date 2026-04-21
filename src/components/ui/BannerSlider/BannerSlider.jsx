@@ -34,35 +34,43 @@ const BannerSlider = () => {
       >
         {bannerSliderData.map((item) => (
           <SwiperSlide key={item.id}>
-            <div className="w-full h-full relative  rounded-lg overflow-hidden">
-              <img
-                src={item.image}
-                alt={item.alt}
-                referrerPolicy="no-referrer"
-                className="w-full h-[75dvh] object-cover overflow-hidden"
-              />
-              <div className="absolute top-0 left-0 w-full h-full bg-primary/21 grid place-items-center p-3 backdrop-blur-xs">
-                <div className="text-center space-y-3.5 max-w-2xl">
-                  <h1 className="font-bold md:font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white!">
-                    {item.title}
-                  </h1>
+              <div className="w-full h-[70dvh] relative overflow-hidden rounded-[2rem]">
+                <img
+                  src={item.image}
+                  alt={item.alt}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] flex items-center justify-center p-8">
+                  <div className="text-center space-y-8 max-w-4xl">
+                    <div className="space-y-4">
+                      <h1 className="font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-tight leading-tight">
+                        {item.title}
+                      </h1>
+                      <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+                        {item.subtitle}
+                      </p>
+                    </div>
 
-                  <p className="text-white/90 sm:text-base md:text-lg">
-                    {item.subtitle}
-                  </p>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                      <MyButton 
+                        onClick={() => navigate("/all-jobs")}
+                        className="w-full sm:w-auto px-10! py-4! text-lg!"
+                      >
+                        Find Opportunities
+                      </MyButton>
 
-                  <div className="space-x-3.5">
-                    <MyButton onClick={() => navigate("/all-jobs")}>
-                      Explore Jobs
-                    </MyButton>
-
-                    <MyButton onClick={() => navigate("/dashboard/add-job")}>
-                      Add Job
-                    </MyButton>
+                      <MyButton 
+                        variant="secondary"
+                        onClick={() => navigate("/dashboard/add-job")}
+                        className="w-full sm:w-auto px-10! py-4! text-lg!"
+                      >
+                        Post a Vacancy
+                      </MyButton>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
           </SwiperSlide>
         ))}
 

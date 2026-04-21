@@ -6,11 +6,11 @@ import ThemeProvider from "./providers/ThemeProvider";
 function App() {
   return (
     <>
+    <ThemeProvider>
       <AuthProvider>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
+        <RouterProvider router={router} />
       </AuthProvider>
+    </ThemeProvider>
     </>
   );
 }

@@ -7,7 +7,7 @@ const PageSpinner = () => {
   const color = theme === "light" ? "#086972" : "#00f7ff";
 
   return (
-    <div className="w-full min-h-dvh grid place-items-center">
+    <div className="w-full min-h-dvh grid place-items-center bg-base-100 dark:bg-slate-900 transition-colors duration-300">
       <RotateLoader color={color} />
     </div>
   );

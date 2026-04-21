@@ -21,7 +21,8 @@ const useGoogleLogin = () => {
       loginSuccessMessage(user.displayName);
       navigate((state && state.path) || "/", { replace: true });
     } catch (err) {
-      const errorMessage = getAuthErrorMessage(err.code);
+      console.error("Google Login Error:", err);
+      const errorMessage = getAuthErrorMessage(err?.code || 'unknown');
       toast.error(errorMessage);
     } finally {
       setGoogleLoading(false);

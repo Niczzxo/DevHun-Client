@@ -34,6 +34,12 @@ const LoginPage = () => {
     const email = form.email.value.trim();
     const password = form.password.value;
 
+    if (!email || !password) {
+      toast.warn("Please enter both email and password.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const userCreds = await loginUser(email, password);
       const user = userCreds.user;
@@ -41,7 +47,8 @@ const LoginPage = () => {
       loginSuccessMessage(user.displayName);
       navigate((state && state.path) || "/", { replace: true });
     } catch (err) {
-      const errorMessage = getAuthErrorMessage(err.code);
+      console.error("Login Error:", err);
+      const errorMessage = getAuthErrorMessage(err?.code || 'unknown');
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -64,7 +71,7 @@ const LoginPage = () => {
               <MyTitle>Login Now</MyTitle>
             </div>
 
-            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 dark:bg-info/15 flex md:items-center md:justify-between md:gap-8 max-w-md md:max-w-full mx-auto">
+            <div className="p-4 md:p-8 rounded-md shadow-md card-premium flex flex-col md:flex-row md:items-center md:justify-between md:gap-8 max-w-md md:max-w-full mx-auto">
               <div className="flex-1/2 hidden md:inline-block">
                 <Lottie animationData={loginGIF} />
               </div>
@@ -78,7 +85,6 @@ const LoginPage = () => {
                       type="email"
                       disabled={loading}
                       placeholder="john-doe@gmail.com"
-                      defaultValue="demo@gmail.com"
                     />
                   </div>
 
@@ -90,7 +96,6 @@ const LoginPage = () => {
                         name="password"
                         type={show ? "text" : "password"}
                         placeholder="••••••••"
-                        defaultValue="Rakibul206#"
                       />
                       <span
                         onClick={() => setShow(!show)}
@@ -114,9 +119,6 @@ const LoginPage = () => {
                     >
                       {loading ? <ActionSpinner /> : "Login"}
                     </MyButton>
-                    <span className="text-green-500 text-sm block text-center">
-                      Filled with demo credentials.
-                    </span>
                   </div>
 
                   <div className="text-center">

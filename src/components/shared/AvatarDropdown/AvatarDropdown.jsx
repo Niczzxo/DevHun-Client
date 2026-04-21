@@ -7,6 +7,7 @@ import {
   HiOutlinePlusCircle,
   HiOutlineUser,
   HiOutlineLogout,
+  HiOutlineBriefcase,
 } from "react-icons/hi";
 import useAuthInfo from "../../../hooks/useAuthInfo";
 import Avatar from "../Avatar/Avatar";
@@ -16,19 +17,24 @@ import getAuthErrorMessage from "../../../utilities/getAuthErrorMessage";
 
 const menuItems = [
   {
-    to: "/",
+    to: "/dashboard",
     icon: HiOutlineHome,
-    label: "Home",
+    label: "Overview",
   },
   {
-    to: "/dashboard/add-job",
-    icon: HiOutlinePlusCircle,
-    label: "Add Job",
+    to: "/dashboard/my-jobs",
+    icon: HiOutlineBriefcase,
+    label: "My Postings",
+  },
+  {
+    to: "/dashboard/my-accepted-tasks",
+    icon: HiOutlineBriefcase,
+    label: "Accepted Tasks",
   },
   {
     to: "/dashboard/profile",
     icon: HiOutlineUser,
-    label: "Profile",
+    label: "Profile Settings",
   },
 ];
 

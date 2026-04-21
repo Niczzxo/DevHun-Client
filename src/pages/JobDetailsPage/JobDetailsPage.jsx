@@ -1,8 +1,7 @@
 // src/pages/JobDetailsPage.jsx
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
-import { gsap } from "gsap";
 import { format } from "date-fns";
 import { useParams, useNavigate } from "react-router";
 import {
@@ -30,6 +29,8 @@ import useSecureAxios from "../../hooks/useSecureAxios";
 import { getAlert } from "../../utilities/getAlert";
 import { cleanupName } from "../../utilities/nameCleanup";
 import { toast } from "react-toastify";
+import useGsapStagger from "../../hooks/useGsapStagger";
+import { useRef } from "react";
 
 const JobDetailsPage = () => {
   const { id } = useParams();
@@ -41,8 +42,9 @@ const JobDetailsPage = () => {
   const [job, setJob] = useState({});
   const [loading, setLoading] = useState(true);
   const [acceptLoading, setAcceptLoading] = useState(false);
+  const containerRef = useRef(null);
 
-  const contentRef = useRef(null);
+  useGsapStagger(containerRef, [loading]);
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -60,23 +62,6 @@ const JobDetailsPage = () => {
     };
     fetchJob();
   }, [id, publicAxios]);
-
-  // GSAP stagger animation on content load
-  useEffect(() => {
-    if (!loading && contentRef.current) {
-      gsap.fromTo(
-        contentRef.current.querySelectorAll(".stagger-item"),
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          stagger: 0.1,
-          ease: "power3.out",
-        }
-      );
-    }
-  }, [loading]);
 
   const handleAcceptJob = async () => {
     if (!currentUser) {
@@ -146,15 +131,10 @@ const JobDetailsPage = () => {
         {job_title ? `${job_title} | DevHun` : "Job Details | DevHun"}
       </title>
 
-      <section className="py-12 lg:py-20">
-        <MyContainer ref={contentRef}>
+      <section className="py-12 lg:py-20" ref={containerRef}>
+        <MyContainer>
           {/* Hero Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="grid lg:grid-cols-3 gap-8 mb-12"
-          >
+          <div className="grid lg:grid-cols-3 gap-8 mb-12 stagger-item">
             {/* Job Info */}
             <div className="lg:col-span-2 space-y-8">
               <div className="stagger-item">
@@ -173,7 +153,7 @@ const JobDetailsPage = () => {
                 </div>
 
                 {/* Quick Info Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-8">
                   {[
                     { icon: HiOutlineBriefcase, label: job_type },
                     { icon: HiOutlineMapPin, label: location },
@@ -190,9 +170,9 @@ const JobDetailsPage = () => {
                   ].map((item, i) => (
                     <div
                       key={i}
-                      className="stagger-item flex items-center gap-3 bg-base-200/50 dark:bg-gray-800/50 p-4 rounded-xl"
+                      className="flex items-center gap-3 bg-base-200/50 dark:bg-gray-800/50 p-4 rounded-xl stagger-item hover:scale-[1.02] transition-transform"
                     >
-                      <item.icon className="size-6 text-primary" />
+                      <item.icon className="size-6 text-primary shrink-0" />
                       <span className="text-sm font-medium">{item.label}</span>
                     </div>
                   ))}
@@ -212,7 +192,7 @@ const JobDetailsPage = () => {
             </div>
 
             {/* Image + CTA */}
-            <div className="stagger-item lg:col-span-1">
+            <div className="lg:col-span-1 stagger-item">
               <div className="sticky top-24 space-y-6">
                 <div className="overflow-hidden rounded-2xl shadow-2xl border border-base-300 dark:border-gray-700">
                   <img
@@ -281,7 +261,7 @@ const JobDetailsPage = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Detailed Sections */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -348,17 +328,12 @@ const JobDetailsPage = () => {
 
           {/* Company Description */}
 
-          <motion.div
-            className="stagger-item mt-12 bg-base-200 dark:bg-gray-800/50 rounded-2xl p-8 border border-base-300 dark:border-gray-700"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
+          <div className="mt-12 card-premium rounded-2xl p-8 stagger-item">
             <h2 className="text-2xl font-bold mb-4">About the Company</h2>
             <p className="text-lg text-base-content/80 dark:text-gray-300 leading-relaxed">
               {company_description}
             </p>
-          </motion.div>
+          </div>
         </MyContainer>
       </section>
     </>

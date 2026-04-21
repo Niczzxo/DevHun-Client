@@ -1,5 +1,4 @@
 import Logo from "../Logo/Logo";
-import { useMemo } from "react";
 import { LuSun } from "react-icons/lu";
 import { BsMoon } from "react-icons/bs";
 import MyButton from "../../ui/MyButton/MyButton";
@@ -15,64 +14,102 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { toggleTheme, theme } = useThemeContext();
 
-  const navLinks = useMemo(() => {
-    const navItems = [
-      { label: "Home", path: "/" },
-      { label: "All Jobs", path: "/all-jobs" },
-      { label: "About Us", path: "/about-us" },
-      { label: "Contact Us", path: "/contact-us" },
-    ];
-
-    if (currentUser) {
-      const dashboard = {
-        label: "Dashboard",
-        path: "/dashboard",
-      };
-
-      navItems.splice(2, 0, dashboard);
-    }
-
-    return navItems.map(({ label, path }, index) => (
-      <li key={index + 1}>
-        <NavLink to={path} className="nav_links">
-          {label}
+  const navLinks = (
+    <>
+      <li>
+        <NavLink to="/" className="nav_links">
+          Home
         </NavLink>
       </li>
-    ));
-  }, [currentUser]);
+      <li>
+        <NavLink to="/all-jobs" className="nav_links">
+          Find Jobs
+        </NavLink>
+      </li>
+      {currentUser && (
+        <li>
+          <NavLink to="/dashboard" className="nav_links">
+            Dashboard
+          </NavLink>
+        </li>
+      )}
+      <li>
+        <NavLink to="/about-us" className="nav_links">
+          About
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/contact-us" className="nav_links">
+          Contact
+        </NavLink>
+      </li>
+      {/* Mobile Only "Post a Job" Styled as Button Link */}
+      <li className="lg:hidden pt-2">
+        <NavLink 
+          to="/dashboard/add-job" 
+          className={({ isActive }) => 
+            `flex items-center justify-center py-3 px-4 rounded-xl font-bold transition-all ${
+              isActive 
+                ? "bg-primary text-white" 
+                : "bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20"
+            }`
+          }
+        >
+          Post a Job
+        </NavLink>
+      </li>
+    </>
+  );
 
   return (
-    <nav className="backdrop-blur-sm bg-primary/17 dark:shadow-white/30 dark:bg-primary/10 shadow-sm">
+    <nav className="glass-nav">
       <MyContainer>
-        <div className="navbar p-0">
-          <div className="navbar-start gap-1.5">
+        <div className="navbar p-0 min-h-16 h-16">
+          <div className="navbar-start gap-2">
             <div className="dropdown">
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost p-1 lg:hidden"
+                className="btn btn-ghost p-1 lg:hidden hover:bg-primary/10 transition-colors"
               >
-                <HiOutlineMenuAlt1 className="text-xl sm:text-2xl md:text-3xl" />
+                <HiOutlineMenuAlt1 className="text-2xl" />
               </div>
 
               <ul
-                tabIndex="-1"
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-100 dark:bg-base-200 rounded-xl z-50 mt-3 w-56 p-3 shadow-xl border border-slate-100 dark:border-slate-800 space-y-1"
               >
                 {navLinks}
+                {!currentUser && (
+                  <div className="pt-3 mt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
+                    <MyButton
+                      onClick={() => navigate("/auth/login")}
+                      className="w-full py-2! text-sm!"
+                    >
+                      Login
+                    </MyButton>
+                    <MyButton
+                      onClick={() => navigate("/auth/register")}
+                      variant="secondary"
+                      className="w-full py-2! text-sm!"
+                    >
+                      Register
+                    </MyButton>
+                  </div>
+                )}
               </ul>
             </div>
 
             <Logo />
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1 gap-3.5 text-base">
+            <ul className="menu menu-horizontal px-1 gap-5 text-sm uppercase tracking-wider font-bold">
               {navLinks}
             </ul>
           </div>
 
-          <div className="navbar-end gap-3">
-            <label className="swap swap-rotate text-primary/70">
+          <div className="navbar-end gap-1 sm:gap-2">
+            <label className="swap swap-rotate text-primary/70 scale-90 sm:scale-100">
               <input
                 onChange={toggleTheme}
                 type="checkbox"
@@ -84,23 +121,33 @@ const Navbar = () => {
               <BsMoon className="size-7 swap-on" />
             </label>
 
+            {/* Desktop Post a Job Button */}
+            <div className="hidden lg:flex items-center mr-2">
+              <MyButton
+                onClick={() => navigate("/dashboard/add-job")}
+                size="sm"
+                className="shadow-sm"
+              >
+                Post a Job
+              </MyButton>
+            </div>
+
             {currentUser ? (
-              <>
-                <AvatarDropdown />
-              </>
+              <AvatarDropdown />
             ) : (
-              <>
-                <MyButton onClick={() => navigate("/auth/login")}>
+              <div className="flex items-center gap-1 sm:gap-2">
+                <MyButton onClick={() => navigate("/auth/login")} size="sm" className="px-3! py-1.5!">
                   Login
                 </MyButton>
 
                 <MyButton
                   onClick={() => navigate("/auth/register")}
                   className="hidden sm:inline-flex"
+                  size="sm"
                 >
                   Register
                 </MyButton>
-              </>
+              </div>
             )}
           </div>
         </div>

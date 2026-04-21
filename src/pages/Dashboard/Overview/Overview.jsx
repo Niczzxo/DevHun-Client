@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 // eslint-disable-next-line no-unused-vars
-import { motion } from "framer-motion";
-import { gsap } from "gsap";
+import { motion, useAnimation, animate } from "framer-motion";
 import MyContainer from "../../../components/shared/MyContainer/MyContainer";
 import {
   HiOutlineBriefcase,
@@ -23,6 +22,23 @@ import useSecureAxios from "../../../hooks/useSecureAxios";
 import MyButton from "../../../components/ui/MyButton/MyButton";
 import { useNavigate } from "react-router";
 import FetchSpinner from "../../../components/ui/FetchSpinner/FetchSpinner";
+
+const Counter = ({ from, to }) => {
+  const [count, setCount] = useState(from);
+
+  useEffect(() => {
+    const controls = animate(from, to, {
+      duration: 1.8,
+      ease: "easeOut",
+      onUpdate(value) {
+        setCount(Math.ceil(value));
+      },
+    });
+    return () => controls.stop();
+  }, [from, to]);
+
+  return <span>{count.toLocaleString()}</span>;
+};
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -63,33 +79,6 @@ const Overview = () => {
     fetchStats();
   }, [secureAxios]);
 
-  // GSAP Number Counter Animation (clean & reliable)
-  useEffect(() => {
-    if (!stats || loading) return;
-
-    const counters = document.querySelectorAll(".stat-number");
-
-    counters.forEach((counter) => {
-      const targetValue = parseInt(counter.dataset.target, 10) || 0;
-
-      gsap.fromTo(
-        counter,
-        { innerText: 0 },
-        {
-          innerText: targetValue,
-          duration: 1.8,
-          ease: "power2.out",
-          snap: { innerText: 1 },
-          onUpdate: function () {
-            counter.innerText = Math.ceil(
-              this.targets()[0].innerText
-            ).toLocaleString();
-          },
-        }
-      );
-    });
-  }, [stats, loading]);
-
   if (loading) {
     return (
       <>
@@ -112,14 +101,14 @@ const Overview = () => {
     );
   }
 
-  const totalJobs = stats.totalJobs || 0;
+  const totalJobs = stats?.totalJobs || 0;
 
   // Prepare last 7 days data with fallbacks
   const today = new Date();
   const last7Days = Array.from({ length: 7 }, (_, i) => {
     const date = subDays(today, 6 - i);
     const dateStr = format(date, "yyyy-MM-dd");
-    const found = stats.jobsOverTime.find((d) => d.date === dateStr);
+    const found = stats?.jobsOverTime?.find((d) => d.date === dateStr);
     return {
       date: format(date, "MMM dd"),
       jobs: found ? found.count : 0,
@@ -129,17 +118,17 @@ const Overview = () => {
   const statusData = [
     {
       name: "Pending",
-      value: stats.statusBreakdown.pending || 0,
+      value: stats?.statusBreakdown?.pending || 0,
       color: "warning",
     },
     {
       name: "Accepted",
-      value: stats.statusBreakdown.accepted || 0,
+      value: stats?.statusBreakdown?.accepted || 0,
       color: "success",
     },
     {
       name: "Completed",
-      value: stats.statusBreakdown.completed || 0,
+      value: stats?.statusBreakdown?.completed || 0,
       color: "info",
     },
   ];
@@ -168,19 +157,19 @@ const Overview = () => {
               },
               {
                 title: "Pending",
-                value: stats.statusBreakdown.pending || 0,
+                value: stats?.statusBreakdown?.pending || 0,
                 icon: HiOutlineClock,
                 color: "text-warning",
               },
               {
                 title: "Accepted",
-                value: stats.statusBreakdown.accepted || 0,
+                value: stats?.statusBreakdown?.accepted || 0,
                 icon: HiOutlineFolder,
                 color: "text-success",
               },
               {
                 title: "Completed",
-                value: stats.statusBreakdown.completed || 0,
+                value: stats?.statusBreakdown?.completed || 0,
                 icon: HiOutlineCheckCircle,
                 color: "text-info",
               },
@@ -191,7 +180,7 @@ const Overview = () => {
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
-                className="card bg-base-200 dark:bg-gray-800 shadow-lg border border-base-300 dark:border-gray-700"
+                className="card-premium border-none"
               >
                 <div className="card-body p-5">
                   <div className="flex items-center justify-between">
@@ -203,7 +192,7 @@ const Overview = () => {
                         className={`stat-number text-2xl font-bold ${stat.color}`}
                         data-target={stat.value}
                       >
-                        0
+                        <Counter from={0} to={stat.value} />
                       </p>
                     </div>
                     <stat.icon className={`size-8 opacity-80 ${stat.color}`} />
@@ -220,7 +209,7 @@ const Overview = () => {
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.4 }}
-              className="card bg-base-200 dark:bg-gray-800 shadow-lg border border-base-300 dark:border-gray-700 p-5"
+              className="card-premium border-none p-5"
             >
               <h2 className="text-lg font-semibold mb-4 text-base-content dark:text-white">
                 Jobs Posted (Last 7 Days)
@@ -259,7 +248,7 @@ const Overview = () => {
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 }}
-              className="card bg-base-200 dark:bg-gray-800 shadow-lg border border-base-300 dark:border-gray-700 p-5"
+              className="card-premium border-none p-5"
             >
               <h2 className="text-lg font-semibold mb-4 text-base-content dark:text-white">
                 Job Status Distribution
@@ -276,7 +265,7 @@ const Overview = () => {
                       <div className="flex items-center justify-between text-sm">
                         <span className="flex items-center gap-2">
                           <div
-                            className={`w-3 h-3 rounded-full bg-${item.color}`}
+                            className={`w-3 h-3 rounded-full ${item.color === 'warning' ? 'bg-warning' : item.color === 'success' ? 'bg-success' : 'bg-info'}`}
                           />
                           {item.name}
                         </span>
@@ -289,7 +278,7 @@ const Overview = () => {
                           initial={{ width: 0 }}
                           animate={{ width: `${percentage}%` }}
                           transition={{ duration: 1, delay: 0.6 }}
-                          className={`h-full bg-${item.color}`}
+                          className={`h-full ${item.color === 'warning' ? 'bg-warning' : item.color === 'success' ? 'bg-success' : 'bg-info'}`}
                         />
                       </div>
                     </div>
