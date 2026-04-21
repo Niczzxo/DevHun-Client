@@ -13,7 +13,6 @@ import MyContainer from "../../../components/shared/MyContainer/MyContainer";
 import MyTitle from "../../../components/ui/MyTitle/MyTitle";
 import loginGIF from "../../../../lotties/login.json";
 import Lottie from "lottie-react";
-// eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import { loginSuccessMessage } from "../../../utilities/getLoginMessage";
 import GoogleButton from "../../../components/ui/GoogleButton/GoogleButton";

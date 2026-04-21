@@ -41,7 +41,6 @@ const ContactUs = () => {
 
       setLoading(false);
 
-      // Reset success message after 5 seconds
       setTimeout(() => {
         setSubmitted(false);
       }, 5000);

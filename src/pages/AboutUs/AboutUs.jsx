@@ -2,8 +2,6 @@ import MyContainer from "../../components/shared/MyContainer/MyContainer";
 import MyTitle from "../../components/ui/MyTitle/MyTitle";
 import MyButton from "../../components/ui/MyButton/MyButton";
 import CountUpNumber from "../../components/ui/CountUpNumber/CountUpNumber";
-
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { teamMembers } from "../../data/teamMembers";
 import { features } from "../../data/features";

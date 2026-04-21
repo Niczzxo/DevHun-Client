@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { gsap } from "gsap";
 
 /**
- * A reusable hook to safely trigger GSAP stagger animations 
+ * A reusable hook to safely trigger GSAP stagger animations
  * on elements with the '.stagger-item' class.
  * Uses gsap.context for React 18+ strict mode safety.
  *
@@ -18,19 +18,18 @@ const useGsapStagger = (containerRef, dependencies = []) => {
       gsap.fromTo(
         ".stagger-item",
         { opacity: 0, y: 40 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
-          stagger: 0.1, 
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
           ease: "power3.out",
-          clearProps: "all" 
+          clearProps: "all"
         }
       );
-    }, containerRef); // scope to container
+    }, containerRef);
 
-    return () => ctx.revert(); // clean up on unmount or re-render
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => ctx.revert();
   }, [containerRef, ...dependencies]);
 };
 

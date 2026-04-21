@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { HiOutlineSearch } from "react-icons/hi";
 
@@ -47,7 +46,6 @@ const AllJobsPage = () => {
   const [sortBy, setSortBy] = useState("created_at");
   const [sortOrder, setSortOrder] = useState("desc");
 
-  // Fetch jobs with filters
   useEffect(() => {
     const fetchJobs = async () => {
       setLoading(true);
@@ -80,7 +78,7 @@ const AllJobsPage = () => {
       }
     };
 
-    const timer = setTimeout(() => fetchJobs(), 400); 
+    const timer = setTimeout(() => fetchJobs(), 400);
     return () => clearTimeout(timer);
   }, [
     search,

@@ -1,5 +1,3 @@
-// src/pages/Dashboard/ProfilePage.jsx
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import {
@@ -26,7 +24,7 @@ const Profile = () => {
     );
   }
 
-  const creationDate = currentUser?.metadata?.creationTime 
+  const creationDate = currentUser?.metadata?.creationTime
     ? new Date(currentUser.metadata.creationTime)
     : null;
 
@@ -40,8 +38,8 @@ const Profile = () => {
 
   const pageVariants = {
     initial: { opacity: 0, y: 10 },
-    animate: { 
-      opacity: 1, 
+    animate: {
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.4,

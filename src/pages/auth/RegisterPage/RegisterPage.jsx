@@ -10,7 +10,6 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import MyContainer from "../../../components/shared/MyContainer/MyContainer";
 import MyTitle from "../../../components/ui/MyTitle/MyTitle";
 import registerGIF from "../../../../lotties/register.json";
-// eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import Lottie from "lottie-react";
 import { loginSuccessMessage } from "../../../utilities/getLoginMessage";

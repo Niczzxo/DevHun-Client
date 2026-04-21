@@ -1,6 +1,4 @@
-// src/pages/Dashboard/UpdateJobDetails.jsx
 import { useEffect, useState, useRef } from "react";
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -72,7 +70,7 @@ const UpdateJobDetails = () => {
     const formData = new FormData(e.target);
     const updatedData = Object.fromEntries(formData);
 
-    // Trim all values
+
     Object.keys(updatedData).forEach((key) => {
       if (typeof updatedData[key] === "string") {
         updatedData[key] = updatedData[key].trim();

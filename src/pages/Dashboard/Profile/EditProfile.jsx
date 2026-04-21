@@ -38,7 +38,7 @@ const EditProfile = () => {
     try {
       await updateUserProfile({
         displayName: displayName.trim(),
-        photoURL: photoURL.trim() || null, // allow clearing the photo URL
+        photoURL: photoURL.trim() || null,
       });
 
       toast.success("Profile updated successfully!");
@@ -52,7 +52,7 @@ const EditProfile = () => {
 
   const pageVariants = {
     initial: { opacity: 0 },
-    animate: { 
+    animate: {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,

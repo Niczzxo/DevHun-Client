@@ -14,21 +14,20 @@ const useSecureAxios = () => {
       baseURL: import.meta.env.VITE_API_URL || "/api",
     });
 
-    // Request Interceptor: Inject fresh Firebase token
+
     instance.interceptors.request.use(
       async (config) => {
         const user = auth.currentUser;
         if (user) {
           try {
-            // Force refresh if nearing expiry, but standard getIdToken is usually enough
+
             const token = await user.getIdToken();
             config.headers.Authorization = `Bearer ${token}`;
           } catch (error) {
             console.error("Error getting token", error);
           }
         } else {
-          // Fallback to localStorage if currentUser isn't populated yet
-          // (Firebase can be slow to initialize auth state)
+
           const token = localStorage.getItem("token");
           if (token) {
             config.headers.Authorization = `Bearer ${token}`;
@@ -39,7 +38,7 @@ const useSecureAxios = () => {
       (error) => Promise.reject(error)
     );
 
-    // Response Interceptor: Handle 401/403 with advanced retry logic
+
     let isRefreshing = false;
     let failedQueue = [];
 
@@ -59,14 +58,13 @@ const useSecureAxios = () => {
       async (error) => {
         const originalRequest = error.config;
 
-        // If it's a 401 and we haven't retried yet for THIS request
+
         if (
           error.response &&
           error.response.status === 401 &&
           !originalRequest._retry
         ) {
           if (isRefreshing) {
-            // Already refreshing, queue this request
             return new Promise((resolve, reject) => {
               failedQueue.push({ resolve, reject });
             })
@@ -83,7 +81,6 @@ const useSecureAxios = () => {
           const user = auth.currentUser;
           if (user) {
             try {
-              // Force refresh the token
               console.log("Forcing token refresh due to 401...");
               const token = await user.getIdToken(true);
               localStorage.setItem("token", token);
@@ -92,7 +89,6 @@ const useSecureAxios = () => {
               processQueue(null, token);
               isRefreshing = false;
 
-              // Retry the original request
               return instance(originalRequest);
             } catch (refreshError) {
               processQueue(refreshError, null);
@@ -104,12 +100,10 @@ const useSecureAxios = () => {
           }
         }
 
-        // Final 401/403 check - logout if non-recoverable
         if (
           error.response &&
           (error.response.status === 401 || error.response.status === 403)
         ) {
-          // If we are already on login page, don't show toast/redirect
           if (window.location.pathname !== "/auth/login") {
             const backendMessage = error.response.data?.message;
             console.error("401/403 Error Details:", {

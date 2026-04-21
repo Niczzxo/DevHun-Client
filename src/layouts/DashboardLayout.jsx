@@ -12,8 +12,6 @@ import {
 } from "react-icons/hi";
 import Logo from "../components/shared/Logo/Logo";
 import MyButton from "../components/ui/MyButton/MyButton";
-
-// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import AvatarDropdown from "../components/shared/AvatarDropdown/AvatarDropdown";
 import { ToastContainer } from "react-toastify";
@@ -57,7 +55,6 @@ const DashboardLayout = () => {
   const sidebarRef = useRef(null);
   const dropdownRef = useRef(null);
 
-  // Detect mobile and handle resize
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 1024;
@@ -72,7 +69,7 @@ const DashboardLayout = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [sidebarOpen]);
 
-  // Close on outside click
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -102,7 +99,6 @@ const DashboardLayout = () => {
     if (isMobile) setSidebarOpen(false);
   };
 
-  // Framer Motion variants
   const sidebarVariants = {
     open: { x: 0, transition: { duration: 0.4, ease: "easeOut" } },
     closed: { x: "-100%", transition: { duration: 0.3, ease: "easeIn" } },
@@ -191,7 +187,6 @@ const DashboardLayout = () => {
                 {/* Sidebar Links */}
                 {sidebarItems.map((item, i) => {
                   const Icon = item.icon;
-                  // If it's "Post a Job", we only show it on mobile sidebar because it's a button in header for desktop
                   if (item.label === "Post a Job" && !isMobile) return null;
 
                   return (

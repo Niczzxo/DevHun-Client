@@ -3,7 +3,6 @@ import Navbar from "../components/shared/Navbar/Navbar";
 import Footer from "../components/shared/Footer/Footer";
 import { ToastContainer } from "react-toastify";
 import * as React from "react";
-// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import useThemeContext from "../hooks/useThemeContext";
 
