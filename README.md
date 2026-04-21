@@ -5,7 +5,7 @@
 
 <div align="center">
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Site-4F46E5?style=for-the-badge&logoColor=white)](https://labora-7a232.web.app/)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Site-4F46E5?style=for-the-badge&logoColor=white)](https://devhun-server.vercel.app/)
 
 [![React](https://img.shields.io/badge/React-19.1.1-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-7.1.7-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
@@ -103,8 +103,8 @@ authentication, and an intuitive interface.
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/programmerrakibul/labora-client.git
-   cd labora-client
+   git clone https://github.com/Niczzxo/DevHun-Client.git
+   cd DevHun-client
    ```
 
 2. **Install dependencies**
@@ -148,7 +148,7 @@ npm run lint     # Run ESLint
 ## 📁 Project Structure
 
 ```
-labora-client/
+DevHun-client/
 ├── src/
 │   ├── assets/          # Images and static files
 │   ├── components/      # Reusable UI components
