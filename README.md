@@ -209,7 +209,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## 📧 Contact
 
 For any inquiries or feedback, reach out at:
-[rakibul00206@gmail.com](mailto:rakibul00206@gmail.com)
+[rakibul00206@gmail.com](mailto:riyazulislam.773@gmail.com)
 
 ---
 
