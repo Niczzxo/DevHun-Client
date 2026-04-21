@@ -4,4 +4,16 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [tailwindcss(), react()],
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://devhun-server.vercel.app",
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+    host: "0.0.0.0",
+    port: 3000,
+  },
 });
