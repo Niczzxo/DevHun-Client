@@ -40,7 +40,6 @@ const RootLayout = () => {
       </main>
 
       <motion.footer
-        className="bg-base-200 rounded py-10"
         initial={{ opacity: 0, y: "100vh" }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}

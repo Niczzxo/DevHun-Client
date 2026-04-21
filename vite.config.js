@@ -13,6 +13,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
+    // We bind to 0.0.0.0 and port 3000 to work in AI Studio
     host: "0.0.0.0",
     port: 3000,
   },

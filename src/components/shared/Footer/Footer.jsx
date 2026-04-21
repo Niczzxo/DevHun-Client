@@ -6,8 +6,8 @@ import Logo from "../Logo/Logo";
 const Footer = () => {
   return (
     <footer className="w-full bg-linear-to-b from-base-200 to-base-300 dark:from-gray-900 dark:to-black">
-      <div className="py-12 border-t border-base-300 dark:border-gray-800">
-        <MyContainer className="space-y-10">
+      <div className="py-8 border-t border-base-300 dark:border-gray-800">
+        <MyContainer className="space-y-6">
           <div className="footer sm:footer-horizontal text-base-content">
             <aside>
               <Logo />
@@ -97,8 +97,8 @@ const Footer = () => {
             </nav>
           </div>
 
-          <div className="pt-8 mt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6 p-6 rounded-2xl bg-linear-to-r from-primary/5 to-secondary/5 border border-primary/10 backdrop-blur-sm">
+          <div className="pt-4 mt-4">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 p-4 rounded-2xl bg-linear-to-r from-primary/5 to-secondary/5 border border-primary/10 backdrop-blur-sm">
               <p className="font-semibold text-center md:text-left opacity-80">
                 &copy; {new Date().getFullYear()} All Rights Reserved by{" "}
                 <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-secondary font-bold text-lg">
