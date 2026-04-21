@@ -11,7 +11,7 @@ const useSecureAxios = () => {
 
   const axiosSecure = useMemo(() => {
     const instance = axios.create({
-      baseURL: import.meta.env.VITE_API_URL || "https://dev-hun-server-huhdgba6t-niczzxos-projects.vercel.app/",
+      baseURL: import.meta.env.VITE_API_URL || "/api",
     });
 
     // Request Interceptor: Inject fresh Firebase token
