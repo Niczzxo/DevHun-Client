@@ -11,6 +11,7 @@ import {
   HiOutlineUser,
 } from "react-icons/hi";
 import Logo from "../components/shared/Logo/Logo";
+import MyButton from "../components/ui/MyButton/MyButton";
 
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
